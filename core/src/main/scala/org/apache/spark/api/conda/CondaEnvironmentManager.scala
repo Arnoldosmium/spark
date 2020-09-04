@@ -94,7 +94,13 @@ final class CondaEnvironmentManager(condaBinaryPath: String,
       condaEnvVars: Map[String, String] = Map.empty): CondaEnvironment = {
     condaMode match {
       case CondaBootstrapMode.Solve =>
-        create(baseDir, condaPackages, condaChannelUrls, condaExtraArgs, condaEnvVars)
+        create(
+          baseDir,
+          condaPackages,
+          condaPackageUrlsUserInfo,
+          condaChannelUrls,
+          condaExtraArgs,
+          condaEnvVars)
       case CondaBootstrapMode.File =>
         createWithFile(
           baseDir, condaPackageUrls, condaPackageUrlsUserInfo, condaExtraArgs, condaEnvVars)
@@ -104,6 +110,7 @@ final class CondaEnvironmentManager(condaBinaryPath: String,
   def create(
       baseDir: String,
       condaPackages: Seq[String],
+      condaPackageUrlsUserInfo: Option[String],
       condaChannelUrls: Seq[String],
       condaExtraArgs: Seq[String] = Nil,
       condaEnvVars: Map[String, String] = Map.empty): CondaEnvironment = {
@@ -137,7 +144,7 @@ final class CondaEnvironmentManager(condaBinaryPath: String,
       CondaBootstrapMode.Solve,
       condaPackages,
       Nil,
-      None,
+      condaPackageUrlsUserInfo,
       condaChannelUrls,
       condaExtraArgs)
   }
